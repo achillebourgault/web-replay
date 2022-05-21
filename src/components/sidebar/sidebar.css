@@ -1,0 +1,82 @@
+.sidebar {
+    background: #242424;
+    height: 100%;
+    width: 280px;
+    position: fixed;
+    top: 0;
+    left: 0;
+}
+
+.sidebar-header {
+    padding: 48px 22px 52px;
+    display: flex;
+}
+
+.sidebar-company-logo {
+    height: 50px;
+    width: 50px;
+    border-radius: 16px;
+}
+
+.sidebar-description {
+    font-size: 15px;
+    color: #cdcdcd;
+    margin: 0 0 0 3%;
+    display: flex;
+    align-items: center;
+}
+
+.sidebar-content {
+    border-radius: 8px;
+    position: absolute;
+    width: 100%;
+    left: 22px;
+    display: flex;
+}
+
+.sidebar-content-list {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 4px;
+    margin-bottom: 4px;
+}
+
+.sidebar-content-title {
+    font-family: 'DefaultFont', sans-serif;
+    font-weight: 600;
+    font-size: 14px;
+    margin-bottom: 12px;
+    color: #898989;
+}
+
+.list-icon {
+    margin-right: 10px;
+    font-size: 23px;
+    display: flex;
+    align-items: center;
+}
+
+.sidebar-content-link {
+    height: 54px;
+    padding: 16px;
+    width: 228px;
+    border: unset;
+    background: #242424;
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: #d7d7d7;
+    text-align: center;
+    font-size: 19px;
+    font-weight: 300;
+    border-radius: 16px;
+    cursor: pointer;
+    font-family: 'DefaultFont', sans-serif;
+}
+
+.sidebar-content-link:hover {
+    background: #464646;
+    transition: 0.4s;
+}

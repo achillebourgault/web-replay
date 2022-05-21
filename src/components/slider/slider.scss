@@ -1,0 +1,221 @@
+.slider-main {
+    padding: 16px;
+    padding-top: 2px;
+    display: flex;
+    max-width: 78.5vw;
+}
+
+.slider-title {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.slider-title > span {
+    display: flex;
+    flex-direction: row;
+    font-size: 12px;
+}
+
+.slider-title > span > a {
+    text-decoration: none;
+}
+
+.slider-section {
+    display: flex;
+    flex-direction: row;
+    overflow-x: scroll;
+    overflow-y: hidden;
+    width: 100%;
+    /*overflow: auto;*/
+    cursor: grab;
+}
+
+.slider-item {
+    margin: 12px;
+    padding: 28px;
+    border-radius: 8px;
+    background: #2a2a2a;
+    flex-shrink: 0;
+    height: 205px;
+    display: flex;
+    align-items: flex-end;
+}
+
+.slider-item-name {
+    font-family: 'DefaultFont', sans-serif;
+    font-size: 18px;
+    font-weight: 500;
+    display: flex;
+}
+
+//VARIABLES BECAUSE CSS PREPROCESSORS ARE COOL
+$gray: #555;
+$yellow: #f2e968;
+$white: #efefef;
+
+.grid-container {
+    background: $white;
+}
+
+//ENABLE CSS GRID FOR LIFT OFF  🚀
+@supports(display: grid) {
+
+    .grid-container {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        grid-template-rows: auto 1fr auto;
+
+        //Let the craziness begin!!!
+        grid-template-areas:
+      "header header header"
+      "title title footer"
+      "main main main";
+        @media screen and (max-width: 500px) {
+            grid-template-columns: 1fr;
+            grid-template-rows: 0.3fr 1fr auto 1fr;
+            grid-template-areas:
+        "header"
+        "title"
+        "main"
+        "footer";
+        }
+    }
+
+    .grid-item {
+        color: #fff;
+        background: skyblue;
+        padding: 3.5em 1em;
+        font-size: 1em;
+        font-weight: 700;
+    }
+
+    .header {
+        background-color: darken(skyblue, 60%);
+        grid-area: header;
+        padding: 1em;
+    }
+
+    .title {
+        color: $gray;
+        background-color: lighten(skyblue, 25%);
+        grid-area: title;
+    }
+
+    .main {
+        color: lighten($gray, 25%);
+        background-color: transparent;
+        grid-area: main;
+        padding: 0;
+        overflow-x: hidden;
+        overflow-y: hidden;
+    }
+
+    .footer {
+        background-color: darken(skyblue, 10%);
+        grid-area: footer;
+        padding: 0.6em;
+    }
+
+    .items {
+        position: relative;
+        width: 100%;
+        overflow-x: hidden;
+        overflow-y: hidden;
+        white-space: nowrap;
+        transition: all 0.2s;
+        transform: scale(0.98);
+        will-change: transform;
+        user-select: none;
+        cursor: pointer;
+    }
+
+    .items.active {
+        cursor: grabbing;
+        transform: scale(1);
+    }
+
+    .item {
+        display: inline-flex;
+        background: #222222;
+        min-height: 250px;
+        background-position: center;
+        width: 425px;
+        margin: 2em 1em;
+        flex-direction: column;
+        overflow: hidden;
+        justify-content: flex-end;
+        transition: -webkit-filter 0.4s;
+        transition: filter 0.4s;
+        transition: filter 0.4s, -webkit-filter 0.4s;
+    }
+
+    .item > img {
+        object-fit: cover;
+    }
+
+    .item-details {
+        padding: 14px;
+        padding-bottom: 18px;
+        display: flex;
+        color: #fdfdfd;
+        align-items: center;
+        justify-content: space-between;
+        background: linear-gradient(transparent, transparent 50%,
+                #222222 50%, #222222);
+        background-size: 100% 200%;
+        /*trasition effect for background*/
+        transition: background 0.6s;
+    }
+
+    .item-details > h3 {
+        font-size: 13px;
+    }
+
+    .item:active {
+        filter: grayscale(92%);
+        transition: filter 0.4s;
+    }
+
+
+    .item-details > p {
+        opacity: 0;
+        transition: opacity 0.6s;
+    }
+
+    .item:hover > .item-details > p {
+        opacity: 1;
+        transition: opacity 0.5s;
+        transition-delay: 0.2s;
+    }
+
+    .item:hover > .item-details {
+        background-position: 100% 100%;
+    }
+
+    .item-details > h3,.item-details > p {
+        backdrop-filter: unset;
+    }
+}
+
+
+a {
+    display: block;
+    color: lighten(skyblue, 15%);
+    text-decoration: underline;
+    margin: 1em auto;
+    &:hover {
+        cursor: pointer;
+    }
+}
+
+p {
+    text-align: left;
+    text-indent: 20px;
+    font-weight: 100;
+}
+
+i {
+    color: skyblue;
+}
