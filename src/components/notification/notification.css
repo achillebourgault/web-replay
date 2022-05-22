@@ -1,0 +1,64 @@
+.notifications-section {
+    position: fixed;
+    z-index: 999;
+    bottom: 12px;
+    right: 12px;
+    height: 100%;
+    width: 380px;
+    display: flex;
+    flex-direction: column-reverse;
+    justify-items: center;
+    align-items: center;
+}
+
+@keyframes notificationProgressAnim {
+    from {width: 0;}
+    to {width: 100%;}
+}
+
+@keyframes notificationRemoveAnim {
+    0% {opacity: 1}
+    100% {opacity: 0}
+}
+
+.notification-progress {
+    background: #d3d3d3;
+    transform: rotateZ(360deg);
+    height: 3px;
+    width: 0;
+    animation: notificationProgressAnim 6s;
+}
+
+.notification {
+    margin: 8px;
+    background: #241a66;
+    color: #8989f5;
+    border-radius: 6px;
+    animation: notificationRemoveAnim 2s;
+    animation-delay: 3.6s;
+}
+
+.notification > h3 {
+    padding: 12px;
+}
+
+.notification > p {
+    padding: 12px;
+    padding-top: 0;
+    margin: 16px;
+    margin-top: 0;
+    margin-left: 6px;
+    text-indent: 0;
+}
+
+.notification-info {
+    border-left: 6px solid #3472e3;
+}
+
+.notification-warning {
+    border-left: 6px solid #e0831c;
+}
+
+.notification-success {
+    border-left: 6px solid #2aa610;
+}

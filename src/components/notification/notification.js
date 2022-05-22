@@ -2,23 +2,26 @@ import './notification.css'
 
 import * as React from "react";
 
-export class Sidebar extends React.Component {
+export class Notifications extends React.Component {
 
     constructor(props) {
         super(props);
-        this.renderSidebarLinks.bind(this);
-        this.state = {
-            company: {
-                companyLogoUrl: 'https://media.istockphoto.com/vectors/thumbnail-image-vector-graphic-vector-id1147544807?k=20&m=1147544807&s=612x612&w=0&h=pBhz1dkwsCMq37Udtp9sfxbjaMl27JUapoyYpQm0anc=',
-                companyName: 'Foot Feminin Douaisis'
-            }
-        }
+    }
+
+    renderNotifications() {
+        return this.props.data.map((element, index) => (
+            <div className={"notification notification-" + element.type}>
+                <div className={"notification-progress"} />
+                <h3>{element.title}</h3>
+                <p>{element.description}</p>
+            </div>
+        ));
     }
 
     render() {
         return (
-            <div className={"sidebar"}>
-
+            <div className={"notifications-section"}>
+                { this.renderNotifications() }
             </div>
         )
     }

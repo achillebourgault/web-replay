@@ -2,6 +2,7 @@ import * as React from "react";
 
 import './slider.scss'
 import {IoArrowForwardOutline} from "react-icons/all";
+import IndexPage, {addNotification} from "../../pages";
 
 let isDown = false;
 let startX;
@@ -20,7 +21,9 @@ export class Slider extends React.Component {
             itemsData: null
         }
 
-        this.fetchData().then();
+        setTimeout(() => {
+            this.fetchData().then();
+        }, 1000)
     }
 
     render() {
@@ -38,9 +41,18 @@ export class Slider extends React.Component {
                     >
                         { this.renderData() }
 
+                        { itemsData.length === 0 ?
+                            <div className={"slider-error"}>
+                                <div className={"slider-placeholder-list"}>
+                                    <div className={"slider-placeholder"} />
+                                    <div className={"slider-placeholder"} />
+                                    <div className={"slider-placeholder"} />
+                                </div>
+                                { this.state.itemsData === 'error' ? <h3>Impossible de récupérer les <b>replays</b>.</h3> : <span /> }
+                            </div>
+                            :
+                            <span />}
 
-
-                        { itemsData.length == 0 ? <h3>Wezffdgfds</h3> : <span />}
                     </div>
                 </main>
 
@@ -49,11 +61,10 @@ export class Slider extends React.Component {
     }
 
     async fetchData() {
-        if (itemsData.length != 0) {
-            console.log("Cancel ask to api")
+        if (itemsData.length !== 0) {
             return;
         }
-        await fetch('https://www.googleapis.com/youtube/v3/search?key=AIzaSyCEaDP8ppihFwcIMzKMbMMEpVLTJRP16dw&channelId='
+        await fetch('rhttps://www.googleapis.com/youtube/v3/search?key=AIzaSyCEaDP8ppihFwcIMzKMbMMEpVLTJRP16dw&channelId='
             + this.state.youtubeChannel.id +'&part=snippet,id&order=date&maxResults=20', {
             method: 'GET'
         })
@@ -63,27 +74,28 @@ export class Slider extends React.Component {
 
                 if (!data)
                     return
-                for (let i = 0; data['items'][i] != undefined; i++) {
-                    // console.log(data['items'][i])
-                    console.log(data['items'][i]['snippet']['channelId'])
-
+                for (let i = 0; data['items'][i] !== undefined; i++) {
                     itemsData.push(
                         {
+                            key: i,
                             title: (data['items'][i]['snippet']['title']).length > titleLength ? data['items'][i]['snippet']['title'].substring(0, titleLength) : data['items'][i]['snippet']['title'],
                             views: Math.floor(Math.random() * (660 - 100 + 1) + 100),
                             videoThumb: data['items'][i]['snippet']['thumbnails']['high']['url'],
                         })
                 }
-
                 this.setState({itemsData: itemsData})
-                // alert(data[0].items.snippet.title)
             }).catch(e => {
-                return
+                this.props.addNotification("Erreur", "Impossible de récupérer les données.", "info");
+                console.error("WebReplay: Failed to contact API. (Probable Cause: Quota Limit exceeded)\n" +
+                    "Trace Error:\n" + e)
+                this.setState({itemsData: 'error'})
             });
 
     }
 
     renderData() {
+        // if (this.state.itemsData === 'error')
+        //     return
         return itemsData.map((element, index) => (
             <div className={"item item" + index} style={{backgroundImage: 'url(' + element.videoThumb + ')'}}>
                 <div className={"item-details"}>
@@ -96,6 +108,8 @@ export class Slider extends React.Component {
     }
 
     onMouseDownF(e) {
+        if (itemsData.length === 0)
+            return;
         const slider = document.querySelector('.items-' + this.state.id);
 
         isDown = true;
@@ -105,6 +119,8 @@ export class Slider extends React.Component {
     }
 
     onMouseLeaveF(e) {
+        if (itemsData.length === 0)
+            return;
         const slider = document.querySelector('.items-' + this.state.id);
 
         isDown = false;
@@ -112,6 +128,8 @@ export class Slider extends React.Component {
     }
 
     onMouseUpF(e) {
+        if (itemsData.length === 0)
+            return;
         const slider = document.querySelector('.items-' + this.state.id);
 
         isDown = false;
@@ -119,6 +137,8 @@ export class Slider extends React.Component {
     }
 
     onMouseMoveF(e) {
+        if (itemsData.length === 0)
+            return;
         const slider = document.querySelector('.items-' + this.state.id);
 
         if(!isDown) return;
@@ -126,6 +146,5 @@ export class Slider extends React.Component {
         const x = e.pageX - slider.offsetLeft;
         const walk = (x - startX) * 3; //scroll-fast
         slider.scrollLeft = scrollLeft - walk;
-        console.log(walk);
     }
 }
