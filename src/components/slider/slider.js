@@ -2,7 +2,6 @@ import * as React from "react";
 
 import './slider.scss'
 import {IoArrowForwardOutline} from "react-icons/all";
-import IndexPage, {addNotification} from "../../pages";
 
 let isDown = false;
 let startX;
@@ -15,15 +14,8 @@ export class Slider extends React.Component {
         super(props);
         this.state = {
             id: Math.floor(Math.random() * (666666 - 0 + 1) + 0),
-            youtubeChannel: {
-                id: 'UCQsH5XtIc9hONE1BQjucM0g'
-            },
             itemsData: null
         }
-
-        setTimeout(() => {
-            this.fetchData().then();
-        }, 1000)
     }
 
     render() {
@@ -41,14 +33,14 @@ export class Slider extends React.Component {
                     >
                         { this.renderData() }
 
-                        { itemsData.length === 0 ?
+                        { this.props.data === undefined || this.props.data === 'error' ?
                             <div className={"slider-error"}>
                                 <div className={"slider-placeholder-list"}>
                                     <div className={"slider-placeholder"} />
                                     <div className={"slider-placeholder"} />
                                     <div className={"slider-placeholder"} />
                                 </div>
-                                { this.state.itemsData === 'error' ? <h3>Impossible de récupérer les <b>replays</b>.</h3> : <span /> }
+                                { this.props.data === 'error' ? <h3>Impossible de récupérer les <b>replays</b>.</h3> : <span /> }
                             </div>
                             :
                             <span />}
@@ -60,50 +52,15 @@ export class Slider extends React.Component {
         )
     }
 
-    async fetchData() {
-        if (itemsData.length !== 0) {
-            return;
-        }
-        await fetch('rhttps://www.googleapis.com/youtube/v3/search?key=AIzaSyCEaDP8ppihFwcIMzKMbMMEpVLTJRP16dw&channelId='
-            + this.state.youtubeChannel.id +'&part=snippet,id&order=date&maxResults=20', {
-            method: 'GET'
-        })
-            .then(response => response.json())
-            .then((data) => {
-                const titleLength = 36;
-
-                if (!data)
-                    return
-                for (let i = 0; data['items'][i] !== undefined; i++) {
-                    itemsData.push(
-                        {
-                            key: i,
-                            title: (data['items'][i]['snippet']['title']).length > titleLength ? data['items'][i]['snippet']['title'].substring(0, titleLength) : data['items'][i]['snippet']['title'],
-                            views: Math.floor(Math.random() * (660 - 100 + 1) + 100),
-                            videoThumb: data['items'][i]['snippet']['thumbnails']['high']['url'],
-                        })
-                }
-                this.setState({itemsData: itemsData})
-            }).catch(e => {
-                this.props.addNotification("Erreur", "Impossible de récupérer les données.", "info");
-                console.error("WebReplay: Failed to contact API. (Probable Cause: Quota Limit exceeded)\n" +
-                    "Trace Error:\n" + e)
-                this.setState({itemsData: 'error'})
-            });
-
-    }
-
     renderData() {
-        // if (this.state.itemsData === 'error')
-        //     return
-        return itemsData.map((element, index) => (
+        return this.props.data !== undefined && this.props.data !== 'error' ? this.props.data.map((element, index) => (
             <div className={"item item" + index} style={{backgroundImage: 'url(' + element.videoThumb + ')'}}>
                 <div className={"item-details"}>
                     <h3>{element.title}</h3>
                     <p><strong>{element.views}</strong> Vues</p>
                 </div>
             </div>
-        ));
+        )) : <div />
 
     }
 

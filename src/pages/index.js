@@ -28,45 +28,51 @@ import {Notifications} from "../components/notification/notification";
 // // Get a reference to the database service
 // const database = getDatabase(app);
 
-const fetchFeedRequest = async () => {
-    let data = [];
-    await fetch('rhttps://www.googleapis.com/youtube/v3/search?key=AIzaSyCEaDP8ppihFwcIMzKMbMMEpVLTJRP16dw&channelId='
-        + this.state.youtubeChannel.id + '&part=snippet,id&order=date&maxResults=20', {
-        method: 'GET'
-    })
-        .then(response => response.json())
-        .then((data) => {
-            const titleLength = 36;
-
-            if (!data)
-                return
-            for (let i = 0; data['items'][i] !== undefined; i++) {
-                data.push(
-                    {
-                        key: i,
-                        title: (data['items'][i]['snippet']['title']).length > titleLength ? data['items'][i]['snippet']['title'].substring(0, titleLength) : data['items'][i]['snippet']['title'],
-                        views: Math.floor(Math.random() * (660 - 100 + 1) + 100),
-                        videoThumb: data['items'][i]['snippet']['thumbnails']['high']['url'],
-                    })
-            }
-            return data;
-        }).catch(e => {
-            this.props.addNotification("Erreur", "Impossible de récupérer les données.", "info");
-            console.error("WebReplay: Failed to contact API. (Probable Cause: Quota Limit exceeded)\n" +
-                "Trace Error:\n" + e)
-            this.setState({itemsData: 'error'})
-            return null;
-        });
-}
-
 class IndexPage extends React.Component {
 
     constructor(props) {
         super(props);
         this.state = {
             notifications: [],
-            feedRequest: null
+            feedRequest: undefined,
+            youtubeChannel: {
+                id: 'UCQsH5XtIc9hONE1BQjucM0g'
+            },
         }
+        this.fetchFeedReplays().then();
+    }
+
+    async fetchFeedReplays() {
+        let result = [];
+        setTimeout(async () => {
+            await fetch('rhttps://www.googleapis.com/youtube/v3/search?key=AIzaSyCEaDP8ppihFwcIMzKMbMMEpVLTJRP16dw&channelId='
+                + this.state.youtubeChannel.id + '&part=snippet,id&order=date&maxResults=20', {
+                method: 'GET'
+            })
+                .then(response => response.json())
+                .then((data) => {
+                    const titleLength = 36;
+
+                    if (!data)
+                        return
+                    for (let i = 0; data['items'][i] !== undefined; i++) {
+                        result.push(
+                            {
+                                key: i,
+                                title: (data['items'][i]['snippet']['title']).length > titleLength ? data['items'][i]['snippet']['title'].substring(0, titleLength) : data['items'][i]['snippet']['title'],
+                                views: Math.floor(Math.random() * (660 - 100 + 1) + 100),
+                                videoThumb: data['items'][i]['snippet']['thumbnails']['high']['url'],
+                            })
+                    }
+                    this.setState({feedRequest: result});
+                }).catch(e => {
+                    this.setState({feedRequest: 'error'});
+                    this.addNotification("Erreur", "Impossible de récupérer les données.", "info");
+                    console.error("WebReplay: Failed to contact API. (Probable Cause: Quota Limit exceeded)\n" +
+                        "Trace Error:\n" + e)
+                });
+        }, 1000);
+        return result;
     }
 
     addNotification(title, description, type) {
@@ -93,8 +99,18 @@ class IndexPage extends React.Component {
                 <div className={"view-content"}>
                     <h1 className={"view-title"}>Fil d'actualité</h1>
 
-                    <Slider addNotification={(title, description, type) => this.addNotification(title, description, type)} title={"Nouveautés"}/>
-                    <Slider addNotification={(title, description, type) => this.addNotification(title, description, type)} title={"Tendances"}/>
+                    <Slider
+                        title={"Nouveautés"}
+                        data={this.state.feedRequest}
+                        updateFeedRequest={() => {return this.state.feedRequest}}
+                        addNotification={(title, description, type) => this.addNotification(title, description, type)}
+                    />
+                    <Slider
+                        title={"Tendances"}
+                        data={this.state.feedRequest}
+                        updateFeedRequest={() => {return this.state.feedRequest}}
+                        addNotification={(title, description, type) => this.addNotification(title, description, type)}
+                    />
                 </div>
             </div>
         )
