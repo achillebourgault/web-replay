@@ -18,6 +18,21 @@ module.exports = {
   }
 },
 * */
+    {
+      resolve: 'gatsby-source-firestore',
+      options: {
+        credential: require("./src/web-logic/serviceAccount.json"),
+        types: [
+          {
+            type: 'replays',
+            collection: 'replays',
+            map: doc => ({
+              test_champ: doc.test_champ,
+            }),
+          }
+        ],
+      },
+    },
   "gatsby-plugin-react-helmet", "gatsby-plugin-sitemap", {
     resolve: 'gatsby-plugin-manifest',
     options: {

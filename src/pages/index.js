@@ -7,26 +7,21 @@ import {Sidebar} from "../components/sidebar/sidebar";
 import {Slider} from "../components/slider/slider";
 import {Notifications} from "../components/notification/notification";
 
-// import { initializeApp } from 'firebase/app';
-// import { getDatabase } from "firebase/database";
-
-// // TODO: Replace with app's Firebase project configuration
-// const firebaseConfig = {
-//     apiKey: "AIzaSyCEaDP8ppihFwcIMzKMbMMEpVLTJRP16dw",
-//     authDomain: "web-replay.firebaseapp.com",
-//     // The value of `databaseURL` depends on the location of the database
-//     databaseURL: "https://DATABASE_NAME.firebaseio.com",
-//     projectId: "web-replay",
-//     messagingSenderId: "SENDER_ID",
-//     appId: "APP_ID",
-//     // For Firebase JavaScript SDK v7.20.0 and later, `measurementId` is an optional field
-//     measurementId: "G-MEASUREMENT_ID",
-// };
+// const admin = require("firebase-admin");
+// const serviceAccount = require("../web-logic/serviceAccount.json");
 //
-// const app = initializeApp(firebaseConfig);
+// admin.initializeApp({
+//     credential: admin.credential.cert(serviceAccount)
+// });
 //
-// // Get a reference to the database service
-// const database = getDatabase(app);
+//
+//
+// // Attach an asynchronous callback to read the data at our posts reference
+// ref.on('value', (snapshot) => {
+//     console.log(snapshot.val());
+// }, (errorObject) => {
+//     console.log('The read failed: ' + errorObject.name);
+// });
 
 class IndexPage extends React.Component {
 
@@ -35,6 +30,7 @@ class IndexPage extends React.Component {
         this.state = {
             notifications: [],
             feedRequest: undefined,
+            apiCall: false,
             youtubeChannel: {
                 id: 'UCQsH5XtIc9hONE1BQjucM0g'
             },
@@ -44,8 +40,51 @@ class IndexPage extends React.Component {
 
     async fetchFeedReplays() {
         let result = [];
+
+
+        // const db = admin.database();
+        // const ref = db.ref("/replays");
+        // await ref.on('test', (snapshot) => {
+        //     console.log(snapshot.val());
+        // }, (errorObject) => {
+        //     console.log('The read failed: ' + errorObject.name);
+        // });
+
+        // const test = allReplays().then()
+
+  //       fetch('http://localhost:8000/___graphql', {
+  //           method: 'POST',
+  //           headers: {
+  //               'Content-Type': 'application/json',
+  //           },
+  //           body: JSON.stringify({
+  //               query: gql`
+  //   query GetLaunches {
+  //     launchesPast(limit: 10) {
+  //       id
+  //       mission_name
+  //       launch_date_local
+  //       launch_site {
+  //         site_name_long
+  //       }
+  //       links {
+  //         article_link
+  //         video_link
+  //         mission_patch
+  //       }
+  //       rocket {
+  //         rocket_name
+  //       }
+  //     }
+  //   }
+  // `
+  //           }),
+  //       })
+  //           .then((res) => res.json())
+  //           .then((result) => console.log(result));
+
         setTimeout(async () => {
-            await fetch('rhttps://www.googleapis.com/youtube/v3/search?key=AIzaSyCEaDP8ppihFwcIMzKMbMMEpVLTJRP16dw&channelId='
+            await fetch((this.state.apiCall ? "" : "api-call-disabled-") + 'https://www.googleapis.com/youtube/v3/search?key=AIzaSyCEaDP8ppihFwcIMzKMbMMEpVLTJRP16dw&channelId='
                 + this.state.youtubeChannel.id + '&part=snippet,id&order=date&maxResults=20', {
                 method: 'GET'
             })
@@ -71,7 +110,7 @@ class IndexPage extends React.Component {
                     console.error("WebReplay: Failed to contact API. (Probable Cause: Quota Limit exceeded)\n" +
                         "Trace Error:\n" + e)
                 });
-        }, 1000);
+        }, 750);
         return result;
     }
 

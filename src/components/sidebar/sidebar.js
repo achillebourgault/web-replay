@@ -24,10 +24,10 @@ export class Sidebar extends React.Component {
 
                 <h4 className={"sidebar-content-title"} style={{marginTop: 26}}>NOUVEAUTES</h4>
                 <div className={"sidebar-content-list"}>
-                    <button href={this.state.navigation.home.url} className={this.state.navigation.home.selected ? "sidebar-content-link sidebar-selected" : "sidebar-content-link"}>
+                    <button href={this.state.navigation.home.url} className={this.state.navigation.news.selected ? "sidebar-content-link sidebar-selected" : "sidebar-content-link"}>
                         <span className={"list-icon"}><RiKeyboardFill /></span>Derniers replays
                     </button>
-                    <button href={this.state.navigation.replays.url} className={this.state.navigation.replays.selected ? "sidebar-content-link sidebar-selected" : "sidebar-content-link"}>
+                    <button href={this.state.navigation.replays.url} className={this.state.navigation.tendances.selected ? "sidebar-content-link sidebar-selected" : "sidebar-content-link"}>
                         <span className={"list-icon"}><RiGooglePlayFill /></span>Tendances
                     </button>
                 </div>
@@ -58,6 +58,14 @@ export class Sidebar extends React.Component {
                 },
                 settings: {
                     url: '/settings',
+                    selected: false,
+                },
+                news: {
+                    url: '/news',
+                    selected: false,
+                },
+                tendances: {
+                    url: '/tendances',
                     selected: false,
                 }
             }

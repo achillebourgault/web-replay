@@ -40,7 +40,11 @@ export class Slider extends React.Component {
                                     <div className={"slider-placeholder"} />
                                     <div className={"slider-placeholder"} />
                                 </div>
-                                { this.props.data === 'error' ? <h3>Impossible de récupérer les <b>replays</b>.</h3> : <span /> }
+                                { this.props.data === 'error' ?
+                                    <h3>Impossible de récupérer les <b>replays</b> ({this.props.title})</h3>
+                                        :
+                                    <span />
+                                }
                             </div>
                             :
                             <span />}
@@ -54,7 +58,7 @@ export class Slider extends React.Component {
 
     renderData() {
         return this.props.data !== undefined && this.props.data !== 'error' ? this.props.data.map((element, index) => (
-            <div className={"item item" + index} style={{backgroundImage: 'url(' + element.videoThumb + ')'}}>
+            <div key={element.key} className={"item item" + index} style={{backgroundImage: 'url(' + element.videoThumb + ')'}}>
                 <div className={"item-details"}>
                     <h3>{element.title}</h3>
                     <p><strong>{element.views}</strong> Vues</p>
@@ -65,7 +69,7 @@ export class Slider extends React.Component {
     }
 
     onMouseDownF(e) {
-        if (itemsData.length === 0)
+        if (this.props.data === undefined || this.props.data === 'error')
             return;
         const slider = document.querySelector('.items-' + this.state.id);
 
@@ -76,7 +80,7 @@ export class Slider extends React.Component {
     }
 
     onMouseLeaveF(e) {
-        if (itemsData.length === 0)
+        if (this.props.data === undefined || this.props.data === 'error')
             return;
         const slider = document.querySelector('.items-' + this.state.id);
 
@@ -85,7 +89,7 @@ export class Slider extends React.Component {
     }
 
     onMouseUpF(e) {
-        if (itemsData.length === 0)
+        if (this.props.data === undefined || this.props.data === 'error')
             return;
         const slider = document.querySelector('.items-' + this.state.id);
 
@@ -94,7 +98,7 @@ export class Slider extends React.Component {
     }
 
     onMouseMoveF(e) {
-        if (itemsData.length === 0)
+        if (this.props.data === undefined || this.props.data === 'error')
             return;
         const slider = document.querySelector('.items-' + this.state.id);
 

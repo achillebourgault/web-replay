@@ -8,6 +8,8 @@
     width: -moz-fit-content;
     background: #151412;
     min-height: 100vh;
+    width: auto;
+    overflow: hidden;
 }
 
 .view-title {

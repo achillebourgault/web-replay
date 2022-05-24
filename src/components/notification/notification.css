@@ -22,9 +22,9 @@
 }
 
 .notification-progress {
-    background: #d3d3d3;
+    background: #808080;
     transform: rotateZ(360deg);
-    height: 3px;
+    height: 2px;
     width: 0;
     animation: notificationProgressAnim 6s;
 }
