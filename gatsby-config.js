@@ -3,44 +3,12 @@ module.exports = {
     title: `web-replay`,
     siteUrl: `https://www.yourdomain.tld`
   },
-  plugins: [
-      /*
-      {
-  resolve: 'gatsby-source-wordpress',
-  options: {
-    "url": "http://localhost:8080/"
-  }
-}
-, {
-  resolve: 'gatsby-plugin-google-analytics',
-  options: {
-    "trackingId": ""
-  }
-},
-* */
-    {
-      resolve: 'gatsby-source-firestore',
-      options: {
-        credential: require("./src/web-logic/serviceAccount.json"),
-        types: [
-          {
-            type: 'replays',
-            collection: 'replays',
-            map: doc => ({
-              test_champ: doc.test_champ,
-            }),
-          }
-        ],
-      },
-    },
-  "gatsby-plugin-react-helmet", "gatsby-plugin-sitemap", {
-    resolve: 'gatsby-plugin-manifest',
+  plugins: ["gatsby-plugin-sass", "gatsby-plugin-image", "gatsby-plugin-react-helmet", "gatsby-plugin-sitemap", "gatsby-plugin-sharp", "gatsby-transformer-sharp", {
+    resolve: 'gatsby-source-filesystem',
     options: {
-      "icon": "src/images/icon.png"
-    }
-  },
-    {
-      resolve: `gatsby-plugin-sass`
-    }
-  ]
+      "name": "images",
+      "path": "./src/images/"
+    },
+    __key: "images"
+  }]
 };

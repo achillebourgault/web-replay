@@ -9,6 +9,10 @@
     font-family: 'DefaultFont', sans-serif;
 }
 
+a {
+    margin: 0 !important;
+}
+
 
 body {
     margin: 0;

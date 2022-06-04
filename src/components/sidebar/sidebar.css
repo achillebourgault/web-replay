@@ -64,8 +64,8 @@
 
 .sidebar-content-link {
     height: 46px;
-    padding: 14px;
-    padding-left: 28px;
+    /* padding: 14px;
+    padding-left: 28px; */
     width: 100%;
     border: unset;
     background: transparent;
@@ -91,7 +91,7 @@
 .sidebar-selected {
     background: #464646;
     border-right: solid 5px #8989f5;
-    width: 104%;
-    padding-left: 34px;
+    /* width: 104%; */
+    /* padding-left: 34px; */
     border-radius: 6px;
 }

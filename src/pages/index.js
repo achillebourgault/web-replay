@@ -7,22 +7,6 @@ import {Sidebar} from "../components/sidebar/sidebar";
 import {Slider} from "../components/slider/slider";
 import {Notifications} from "../components/notification/notification";
 
-// const admin = require("firebase-admin");
-// const serviceAccount = require("../web-logic/serviceAccount.json");
-//
-// admin.initializeApp({
-//     credential: admin.credential.cert(serviceAccount)
-// });
-//
-//
-//
-// // Attach an asynchronous callback to read the data at our posts reference
-// ref.on('value', (snapshot) => {
-//     console.log(snapshot.val());
-// }, (errorObject) => {
-//     console.log('The read failed: ' + errorObject.name);
-// });
-
 class IndexPage extends React.Component {
 
     constructor(props) {
@@ -40,48 +24,6 @@ class IndexPage extends React.Component {
 
     async fetchFeedReplays() {
         let result = [];
-
-
-        // const db = admin.database();
-        // const ref = db.ref("/replays");
-        // await ref.on('test', (snapshot) => {
-        //     console.log(snapshot.val());
-        // }, (errorObject) => {
-        //     console.log('The read failed: ' + errorObject.name);
-        // });
-
-        // const test = allReplays().then()
-
-  //       fetch('http://localhost:8000/___graphql', {
-  //           method: 'POST',
-  //           headers: {
-  //               'Content-Type': 'application/json',
-  //           },
-  //           body: JSON.stringify({
-  //               query: gql`
-  //   query GetLaunches {
-  //     launchesPast(limit: 10) {
-  //       id
-  //       mission_name
-  //       launch_date_local
-  //       launch_site {
-  //         site_name_long
-  //       }
-  //       links {
-  //         article_link
-  //         video_link
-  //         mission_patch
-  //       }
-  //       rocket {
-  //         rocket_name
-  //       }
-  //     }
-  //   }
-  // `
-  //           }),
-  //       })
-  //           .then((res) => res.json())
-  //           .then((result) => console.log(result));
 
         setTimeout(async () => {
             await fetch((this.state.apiCall ? "" : "api-call-disabled-") + 'https://www.googleapis.com/youtube/v3/search?key=AIzaSyCEaDP8ppihFwcIMzKMbMMEpVLTJRP16dw&channelId='
@@ -134,7 +76,7 @@ class IndexPage extends React.Component {
         return (
             <div style={{background: '#E7ECEF'}}>
                 <Notifications data={this.state.notifications} />
-                <Sidebar />
+                <Sidebar selected={"index"} />
                 <div className={"view-content"}>
                     <h1 className={"view-title"}>Fil d'actualité</h1>
 

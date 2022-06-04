@@ -2,6 +2,7 @@ import './sidebar.css'
 
 import * as React from "react";
 import {RiGooglePlayFill, RiKeyboardFill, RiListSettingsLine} from "react-icons/all";
+import {Link} from "gatsby";
 
 export class Sidebar extends React.Component {
 
@@ -10,26 +11,35 @@ export class Sidebar extends React.Component {
             <div className={"sidebar-content-nav"}>
                 <h4 className={"sidebar-content-title"}>REPLAYS DES MATCHS</h4>
                 <div className={"sidebar-content-list"}>
-                    <button href={this.state.navigation.home.url} className={this.state.navigation.home.selected ? "sidebar-content-link sidebar-selected" : "sidebar-content-link"}>
-                        <span className={"list-icon"}><RiKeyboardFill /></span>Fil d'actualité
-                    </button>
-                    <button href={this.state.navigation.replays.url} className={this.state.navigation.replays.selected ? "sidebar-content-link sidebar-selected" : "sidebar-content-link"}>
-                        <span className={"list-icon"}><RiGooglePlayFill /></span>Replays
-                    </button>
-                    <button href={this.state.navigation.settings.url} className={this.state.navigation.settings.selected ? "sidebar-content-link sidebar-selected" : "sidebar-content-link"}>
-                        <span className={"list-icon"}><RiListSettingsLine /></span>Paramètres
-
-                    </button>
+                    <Link to={"/"} className={this.props.selected === 'index' ? "sidebar-content-link sidebar-selected" : "sidebar-content-link"}>
+                        <div style={{marginLeft: 28, display: 'flex', flexDirection: 'row'}}>
+                            <span className={"list-icon"}><RiKeyboardFill /></span>Fil d'actualité
+                        </div>
+                    </Link>
+                    <Link to={"/replays"} className={this.props.selected === 'replays' ? "sidebar-content-link sidebar-selected" : "sidebar-content-link"}>
+                        <div style={{marginLeft: 28, display: 'flex', flexDirection: 'row'}}>
+                            <span className={"list-icon"}><RiGooglePlayFill /></span>Replays
+                        </div>
+                    </Link>
+                    <Link to={"/settings"} className={this.props.selected === 'settings' ? "sidebar-content-link sidebar-selected" : "sidebar-content-link"}>
+                        <div style={{marginLeft: 28, display: 'flex', flexDirection: 'row'}}>
+                            <span className={"list-icon"}><RiListSettingsLine /></span>Paramètres
+                        </div>
+                    </Link>
                 </div>
 
                 <h4 className={"sidebar-content-title"} style={{marginTop: 26}}>NOUVEAUTES</h4>
                 <div className={"sidebar-content-list"}>
-                    <button href={this.state.navigation.home.url} className={this.state.navigation.news.selected ? "sidebar-content-link sidebar-selected" : "sidebar-content-link"}>
-                        <span className={"list-icon"}><RiKeyboardFill /></span>Derniers replays
-                    </button>
-                    <button href={this.state.navigation.replays.url} className={this.state.navigation.tendances.selected ? "sidebar-content-link sidebar-selected" : "sidebar-content-link"}>
-                        <span className={"list-icon"}><RiGooglePlayFill /></span>Tendances
-                    </button>
+                    <Link to={"/settings"} className={this.props.selected === 'settings' ? "sidebar-content-link sidebar-selected" : "sidebar-content-link"}>
+                        <div style={{marginLeft: 28, display: 'flex', flexDirection: 'row'}}>
+                            <span className={"list-icon"}><RiListSettingsLine /></span>Derniers replays
+                        </div>
+                    </Link>
+                    <Link to={"/trends"} className={this.props.selected === 'settings' ? "sidebar-content-link sidebar-selected" : "sidebar-content-link"}>
+                        <div style={{marginLeft: 28, display: 'flex', flexDirection: 'row'}}>
+                            <span className={"list-icon"}><RiListSettingsLine /></span>Tendances
+                        </div>
+                    </Link>
                 </div>
             </div>
         )
