@@ -10,5 +10,28 @@ module.exports = {
       "path": "./src/images/"
     },
     __key: "images"
-  }]
+  }
+  /*
+  ,
+    {
+
+      resolve: `gatsby-source-mysql`,
+      options: {
+        connectionDetails: {
+          host: 'https://ftp.cluster014.hosting.ovh.net',
+          user: 'footfemisite',
+          password: 'Zc45c552000',
+          database: 'footfemisite'
+        },
+        queries: [
+            {
+                statement: 'SELECT * FROM wr_test2',
+                idFieldName: 'Id',
+                name: 'Title'
+            }
+        ]
+      }
+    }
+   */
+  ]
 };
