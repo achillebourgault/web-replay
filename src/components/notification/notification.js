@@ -4,10 +4,6 @@ import * as React from "react";
 
 export class Notifications extends React.Component {
 
-    constructor(props) {
-        super(props);
-    }
-
     renderNotifications() {
         return this.props.data.map((element, index) => (
             <div key={element.key}  className={"notification notification-" + element.type}>

@@ -3,35 +3,32 @@ module.exports = {
     title: `web-replay`,
     siteUrl: `https://www.yourdomain.tld`
   },
-  plugins: ["gatsby-plugin-sass", "gatsby-plugin-image", "gatsby-plugin-react-helmet", "gatsby-plugin-sitemap", "gatsby-plugin-sharp", "gatsby-transformer-sharp", {
-    resolve: 'gatsby-source-filesystem',
-    options: {
-      "name": "images",
-      "path": "./src/images/"
-    },
-    __key: "images"
-  }
-  /*
-  ,
+  plugins: ["gatsby-plugin-sass",
+    `gatsby-plugin-react-helmet`,
     {
-
-      resolve: `gatsby-source-mysql`,
+      resolve: `gatsby-source-filesystem`,
       options: {
-        connectionDetails: {
-          host: 'https://ftp.cluster014.hosting.ovh.net',
-          user: 'footfemisite',
-          password: 'Zc45c552000',
-          database: 'footfemisite'
-        },
-        queries: [
-            {
-                statement: 'SELECT * FROM wr_test2',
-                idFieldName: 'Id',
-                name: 'Title'
-            }
-        ]
-      }
-    }
-   */
-  ]
+        name: `images`,
+        path: `${__dirname}/src/images`,
+      },
+    },
+    `gatsby-transformer-sharp`,
+    `gatsby-plugin-sharp`,
+    {
+      resolve: `gatsby-plugin-manifest`,
+      options: {
+        name: `gatsby-starter-default`,
+        short_name: `starter`,
+        start_url: `/`,
+        background_color: `#663399`,
+        theme_color: `#663399`,
+        display: `minimal-ui`,
+        icon: `src/images/gatsby-icon.png`, // This path is relative to the root of the site.
+      },
+    },
+    `gatsby-plugin-gatsby-cloud`,
+    // this (optional) plugin enables Progressive Web App + Offline functionality
+    // To learn more, visit: https://gatsby.dev/offline
+    // `gatsby-plugin-offline`,
+  ],
 };

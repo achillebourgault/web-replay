@@ -7,6 +7,10 @@ import {Sidebar} from "../components/sidebar/sidebar";
 import {Slider} from "../components/slider/slider";
 import {Notifications} from "../components/notification/notification";
 
+import {auth} from "../utils/firebase"
+
+import {getReplays} from "../utils/getReplays"
+
 class IndexPage extends React.Component {
 
     constructor(props) {
@@ -24,6 +28,10 @@ class IndexPage extends React.Component {
 
     async fetchFeedReplays() {
         let result = [];
+
+        getReplays().then();
+        const userCredentials = await auth.signInWithEmailAndPassword("test@test.fr", "testtest")
+        console.log(userCredentials.user)
 
         setTimeout(async () => {
             await fetch((this.state.apiCall ? "" : "api-call-disabled-") + 'https://www.googleapis.com/youtube/v3/search?key=AIzaSyCEaDP8ppihFwcIMzKMbMMEpVLTJRP16dw&channelId='
